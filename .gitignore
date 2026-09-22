@@ -1,0 +1,21 @@
+# ---------------------------------------------------------------------------
+# Build output - never commit these
+# ---------------------------------------------------------------------------
+stm32f411_driver/build/
+
+# object files, dependencies, listings
+*.o
+*.d
+*.lst
+*.su
+
+# binaries
+*.elf
+*.bin
+*.hex
+*.map
+
+# editor / OS junk
+*.swp
+*~
+.DS_Store
