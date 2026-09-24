@@ -1,6 +1,7 @@
 #include "stm32f411_gpio.h"
 
 
+
 void GPIO_Init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig){
     uint32_t temp = 0;
 
@@ -41,5 +42,18 @@ void GPIO_Init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig){
         pGpiox->AFR[afrIndex] |= temp;
 
     }
+}
+
+void GPIO_writePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value){
+
+    if(value == GPIO_PIN_SET){
+        pGpiox->ODR |= (1 << pinNumber);
+    }else if(value == GPIO_PIN_CLEAR){
+        pGpiox->ODR &= ~(1 << pinNumber);
+    }
+}
+
+void Delay(uint32_t delay){
+    for(uint32_t i = 0; i < delay; i++);
 }
 
