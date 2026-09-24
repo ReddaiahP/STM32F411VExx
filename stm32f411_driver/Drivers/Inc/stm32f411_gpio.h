@@ -3,6 +3,10 @@
 
 #include "stm32f411_driver.h"
 
+
+#define GPIO_PIN_SET     1
+#define GPIO_PIN_CLEAR   0
+
 /* GPIO register definition */
 
 typedef struct
@@ -117,6 +121,25 @@ typedef enum{
 
 /* Function prototypes */
 void GPIO_Init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig);
+void GPIO_writePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);
+void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
+void GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t *value);
+void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);
+void GPIO_readPort(GPIO_Reg_Def_t *pGpiox,uint16_t *value);
+void Delay(uint32_t delay);
 
+void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnorDi);
+void GPIO_IRQHandling(uint8_t pinNumber);
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
+void GPIO_IRQEnable(uint8_t IRQNumber);
+void GPIO_IRQDisable(uint8_t IRQNumber);
+void GPIO_IRQClearPending(uint8_t IRQNumber);
+void GPIO_IRQSetPending(uint8_t IRQNumber);
+void GPIO_IRQGetPending(uint8_t IRQNumber, uint8_t *pendingStatus);
+void GPIO_IRQGetActive(uint8_t IRQNumber, uint8_t *activeStatus);
+void GPIO_IRQGetPriority(uint8_t IRQNumber, uint32_t *IRQPriority);
+void GPIO_IRQSetPriority(uint8_t IRQNumber, uint32_t IRQPriority);
+void GPIO_IRQSetPriorityGrouping(uint32_t priorityGrouping);
+void GPIO_IRQGetPriorityGrouping(uint32_t *priorityGrouping);
 
 #endif 
