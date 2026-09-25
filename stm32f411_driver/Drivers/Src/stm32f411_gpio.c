@@ -2,7 +2,7 @@
 
 
 
-void GPIO_Init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig){
+void GPIO_init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig){
     uint32_t temp = 0;
 
     /* Moder config */
@@ -55,5 +55,12 @@ void GPIO_writePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value){
 
 void Delay(uint32_t delay){
     for(uint32_t i = 0; i < delay; i++);
+}
+
+
+uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber){
+    
+    uint8_t value = (pGpiox->IDR >> pinNumber) & 0x1;
+    return value;
 }
 
