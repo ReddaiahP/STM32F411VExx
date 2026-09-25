@@ -3,6 +3,8 @@
 
 int main(void)
 {   
+
+    // GPIO D13 and D12 config as output
     GPIO_Reg_Def_t *pGpioD13 = GPIOD;
     GPIO_PinConfig_t pinConfigD13;
     pinConfigD13.pin = GPIO_PIN_NO_13;
@@ -21,20 +23,37 @@ int main(void)
 
     GPIOD_PCLK_EN();
     GPIOD_PREG_RST();
-    GPIO_Init(pGpioD13, &pinConfigD13);
-    GPIO_Init(pGpioD12, &pinConfigD12);
+    GPIO_init(pGpioD13, &pinConfigD13);
+    GPIO_init(pGpioD12, &pinConfigD12);
 
+    //GPIOA0 config as input
+    GPIO_Reg_Def_t *pGpioA0 = GPIOA;
+    GPIO_PinConfig_t pinConfigA0;
+
+    pinConfigA0.pin = GPIO_PIN_NO_0;
+    pinConfigA0.opMode = GPIO_MODE_IN;
+    pinConfigA0.pupd = GPIO_PD;
+    pinConfigA0.otype = GPIO_OP_TYPE_PP;
+    pinConfigA0.speed = GPIO_SPEED_HIGH;
+
+    GPIOA_PCLK_EN();
+    GPIO_init(pGpioA0, &pinConfigA0);
+    
     
     while(1)
     {
-        GPIO_writePin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
-        Delay(500000);
-        GPIO_writePin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
-        Delay(1000000);
-        GPIO_writePin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_CLEAR);
-        Delay(500000);
-        GPIO_writePin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_CLEAR);
-        Delay(1000000);
+        if(GPIO_readPin(pGpioA0, GPIO_PIN_NO_0) == GPIO_PIN_SET){
+            GPIO_writePin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
+            GPIO_writePin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
+            Delay(500);
+            
+        }
+        else{
+            GPIO_writePin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_CLEAR);
+            GPIO_writePin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_CLEAR);
+            Delay(500);
+        }
+        
         
     }
 }

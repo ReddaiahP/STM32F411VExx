@@ -84,8 +84,8 @@ typedef enum{
 
 typedef enum{
     GPIO_NO_PUPD = 0,
-    GPIO_PIN_PU,
-    GPIO_PIN_PD
+    GPIO_PU,
+    GPIO_PD
 } GPIO_PuPd_t;
 
 
@@ -120,12 +120,12 @@ typedef enum{
 
 
 /* Function prototypes */
-void GPIO_Init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig);
+void GPIO_init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig);
 void GPIO_writePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);
 void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
-void GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t *value);
+uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
 void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);
-void GPIO_readPort(GPIO_Reg_Def_t *pGpiox,uint16_t *value);
+uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);
 void Delay(uint32_t delay);
 
 void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnorDi);
