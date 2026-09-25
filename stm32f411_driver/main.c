@@ -42,18 +42,11 @@ int main(void)
     
     while(1)
     {
-        if(GPIO_readPin(pGpioA0, GPIO_PIN_NO_0) == GPIO_PIN_SET){
-            GPIO_writePin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
-            GPIO_writePin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
-            Delay(500);
-            
-        }
-        else{
-            GPIO_writePin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_CLEAR);
-            GPIO_writePin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_CLEAR);
-            Delay(500);
-        }
-        
-        
+        GPIO_togglePin(pGpioD13, GPIO_PIN_NO_13);
+        GPIO_togglePin(pGpioD12, GPIO_PIN_NO_12);
+        Delay(500000);
+        GPIO_togglePin(pGpioD13, GPIO_PIN_NO_13);
+        GPIO_togglePin(pGpioD12, GPIO_PIN_NO_12);  
+        Delay(50000);
     }
 }
