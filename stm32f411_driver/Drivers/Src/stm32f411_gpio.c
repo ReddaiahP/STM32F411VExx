@@ -67,3 +67,12 @@ uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber){
 void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber){
     pGpiox->ODR ^= (1 << pinNumber);
 }
+
+
+void GPIO_bssrPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value){
+    if(value == GPIO_PIN_SET){
+        pGpiox->BSRR |= (1 << pinNumber);
+    }else if(value == GPIO_PIN_CLEAR){
+        pGpiox->BSRR |= (1 << (pinNumber + 16));
+    }
+}

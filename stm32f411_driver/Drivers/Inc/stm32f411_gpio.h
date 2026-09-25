@@ -126,6 +126,7 @@ void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
 uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
 void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);
 uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);
+void GPIO_bssrPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);
 void Delay(uint32_t delay);
 
 

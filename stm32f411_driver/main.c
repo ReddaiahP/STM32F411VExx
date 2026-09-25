@@ -26,27 +26,19 @@ int main(void)
     GPIO_init(pGpioD13, &pinConfigD13);
     GPIO_init(pGpioD12, &pinConfigD12);
 
-    //GPIOA0 config as input
-    GPIO_Reg_Def_t *pGpioA0 = GPIOA;
-    GPIO_PinConfig_t pinConfigA0;
-
-    pinConfigA0.pin = GPIO_PIN_NO_0;
-    pinConfigA0.opMode = GPIO_MODE_IN;
-    pinConfigA0.pupd = GPIO_PD;
-    pinConfigA0.otype = GPIO_OP_TYPE_PP;
-    pinConfigA0.speed = GPIO_SPEED_HIGH;
-
-    GPIOA_PCLK_EN();
-    GPIO_init(pGpioA0, &pinConfigA0);
     
     
     while(1)
     {
-        GPIO_togglePin(pGpioD13, GPIO_PIN_NO_13);
-        GPIO_togglePin(pGpioD12, GPIO_PIN_NO_12);
+        
+        GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
+        GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
+
         Delay(500000);
-        GPIO_togglePin(pGpioD13, GPIO_PIN_NO_13);
-        GPIO_togglePin(pGpioD12, GPIO_PIN_NO_12);  
-        Delay(50000);
+         
+
+        GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_CLEAR);
+        GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_CLEAR);
+        Delay(500000);
     }
 }
