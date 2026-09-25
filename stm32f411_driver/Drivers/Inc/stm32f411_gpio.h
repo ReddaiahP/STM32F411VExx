@@ -128,18 +128,6 @@ void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);
 uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);
 void Delay(uint32_t delay);
 
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t EnorDi);
-void GPIO_IRQHandling(uint8_t pinNumber);
-void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
-void GPIO_IRQEnable(uint8_t IRQNumber);
-void GPIO_IRQDisable(uint8_t IRQNumber);
-void GPIO_IRQClearPending(uint8_t IRQNumber);
-void GPIO_IRQSetPending(uint8_t IRQNumber);
-void GPIO_IRQGetPending(uint8_t IRQNumber, uint8_t *pendingStatus);
-void GPIO_IRQGetActive(uint8_t IRQNumber, uint8_t *activeStatus);
-void GPIO_IRQGetPriority(uint8_t IRQNumber, uint32_t *IRQPriority);
-void GPIO_IRQSetPriority(uint8_t IRQNumber, uint32_t IRQPriority);
-void GPIO_IRQSetPriorityGrouping(uint32_t priorityGrouping);
-void GPIO_IRQGetPriorityGrouping(uint32_t *priorityGrouping);
+
 
 #endif 

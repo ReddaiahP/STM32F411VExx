@@ -64,3 +64,6 @@ uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber){
     return value;
 }
 
+void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber){
+    pGpiox->ODR ^= (1 << pinNumber);
+}
