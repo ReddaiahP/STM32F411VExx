@@ -23,5 +23,29 @@
 
 #define RCC_BASE      (AHB1PERIPH_BASE + 0x3800UL)
 
+#define EXTI_BASE      (APB2PERIPH_BASE + 0x3C00UL)
+#define SYSCFG_BASE    (APB2PERIPH_BASE + 0x3800UL)
+
+
+#define NVIC_BASE   ((volatile uint32_t *)0xE000E100UL)
+
+typedef struct{
+    volatile uint32_t ISER[8];
+    volatile uint32_t RESERVED0[24]; // Reserved space to align with the NVIC register layout 0x120-10x80 = 0x60 bytes, 0x60/4 = 24 here 4 because each uint32_t is 4 bytes
+    volatile uint32_t ICER[8];
+    volatile uint32_t RESERVED1[24]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t ISPR[8];
+    volatile uint32_t RESERVED2[24]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t ICPR[8];
+    volatile uint32_t RESERVED3[24]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t IABR[8];
+    volatile uint32_t RESERVED4[56]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t IPR[60];
+    volatile uint32_t RESERVED5[580]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t STIR;
+}NVIC_Reg_Def_t;
+
+
+#define NVIC    ((NVIC_Reg_Def_t *)NVIC_BASE)
 
 #endif
