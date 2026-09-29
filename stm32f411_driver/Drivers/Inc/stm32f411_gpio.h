@@ -1,5 +1,5 @@
-#ifndef INC_STM32F411_GPIO_H_
-#define INC_STM32F411_GPIO_H_
+#ifndef STM32F411_GPIO_H_
+#define STM32F411_GPIO_H_
 
 #include "stm32f411_driver.h"
 
@@ -26,11 +26,15 @@ typedef struct
 
 /* GPIO peripheral definitions */
 
-#define GPIOA    ((volatile GPIO_Reg_Def_t *)GPIOA_BASE)
-#define GPIOB    ((volatile GPIO_Reg_Def_t *)GPIOB_BASE)
-#define GPIOC    ((volatile GPIO_Reg_Def_t *)GPIOC_BASE)
-#define GPIOD    ((volatile GPIO_Reg_Def_t *)GPIOD_BASE)
-#define GPIOE    ((volatile GPIO_Reg_Def_t *)GPIOE_BASE)
+#define GPIOA    ((GPIO_Reg_Def_t *)GPIOA_BASE)
+#define GPIOB    ((GPIO_Reg_Def_t *)GPIOB_BASE)
+#define GPIOC    ((GPIO_Reg_Def_t *)GPIOC_BASE)
+#define GPIOD    ((GPIO_Reg_Def_t *)GPIOD_BASE)
+#define GPIOE    ((GPIO_Reg_Def_t *)GPIOE_BASE)
+
+#define EXTI    ((Exti_Reg_Def_t *)EXTI_BASE)
+
+#define SYSCFG_BASE    (APB2PERIPH_BASE + 0x3800UL)
 
 
 
@@ -116,6 +120,17 @@ typedef enum{
 } GPIO_AltFun_t;
 
 
+/* Interrupt registers */
+typedef struct
+{
+    volatile uint32_t IMR;
+    volatile uint32_t EMR;
+    volatile uint32_t RTSR;
+    volatile uint32_t FTSR;
+    volatile uint32_t SWIER;
+    volatile uint32_t PR;
+
+} Exti_Reg_Def_t;
 
 
 
