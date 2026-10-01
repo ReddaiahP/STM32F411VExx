@@ -26,6 +26,8 @@ int main(void)
     GPIO_init(pGpioD13, &pinConfigD13);
     GPIO_init(pGpioD12, &pinConfigD12);
 
+
+    NVIC_enableIRQ(6);
     
     
     while(1)

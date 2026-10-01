@@ -24,19 +24,6 @@ typedef struct
 } GPIO_Reg_Def_t;
 
 
-/* GPIO peripheral definitions */
-
-#define GPIOA    ((GPIO_Reg_Def_t *)GPIOA_BASE)
-#define GPIOB    ((GPIO_Reg_Def_t *)GPIOB_BASE)
-#define GPIOC    ((GPIO_Reg_Def_t *)GPIOC_BASE)
-#define GPIOD    ((GPIO_Reg_Def_t *)GPIOD_BASE)
-#define GPIOE    ((GPIO_Reg_Def_t *)GPIOE_BASE)
-
-#define EXTI    ((Exti_Reg_Def_t *)EXTI_BASE)
-
-#define SYSCFG_BASE    (APB2PERIPH_BASE + 0x3800UL)
-
-
 
 /* GPIO config Registers definitions */
 
@@ -120,6 +107,26 @@ typedef enum{
 } GPIO_AltFun_t;
 
 
+typedef enum{
+    IRQ_NO_EXTI0 = 6,
+    IRQ_NO_EXTI1 = 7,
+    IRQ_NO_EXTI2 = 8,
+    IRQ_NO_EXTI3 = 9,
+    IRQ_NO_EXTI4 = 10,
+    IRQ_NO_EXTI9_5 = 23,
+    IRQ_NO_EXTI15_10 = 40
+} IRQ_Number_t;
+
+typedef enum{
+    PORT_CODE_GPIOA = 0,
+    PORT_CODE_GPIOB,
+    PORT_CODE_GPIOC,
+    PORT_CODE_GPIOD,
+    PORT_CODE_GPIOE
+}PortCode_Exti_t;
+
+
+
 /* Interrupt registers */
 typedef struct
 {
@@ -133,6 +140,61 @@ typedef struct
 } Exti_Reg_Def_t;
 
 
+typedef struct{
+    volatile uint32_t MEMRMP;
+    volatile uint32_t PMC;
+    volatile uint32_t EXTICR[4];
+    volatile uint32_t RESV0[2];
+    volatile uint32_t CMPCR;
+}SYSCFG_Reg_Def_t;
+
+
+
+/* NVIC Definitions */
+
+
+typedef struct{
+    volatile uint32_t ISER[8];
+    volatile uint32_t RESERVED0[24]; // Reserved space to align with the NVIC register layout 0x120-0x80 = 0x60 bytes, 0x60/4 = 24 here 4 because each uint32_t is 4 bytes
+    volatile uint32_t ICER[8];
+    volatile uint32_t RESERVED1[24]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t ISPR[8];
+    volatile uint32_t RESERVED2[24]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t ICPR[8];
+    volatile uint32_t RESERVED3[24]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t IABR[8];
+    volatile uint32_t RESERVED4[56]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t IPR[60];
+    volatile uint32_t RESERVED5[580]; // Reserved space to align with the NVIC register layout
+    volatile uint32_t STIR;
+}NVIC_Reg_Def_t;
+
+
+
+
+
+
+/* GPIO peripheral definitions */
+
+#define GPIOA    ((GPIO_Reg_Def_t *)GPIOA_BASE)
+#define GPIOB    ((GPIO_Reg_Def_t *)GPIOB_BASE)
+#define GPIOC    ((GPIO_Reg_Def_t *)GPIOC_BASE)
+#define GPIOD    ((GPIO_Reg_Def_t *)GPIOD_BASE)
+#define GPIOE    ((GPIO_Reg_Def_t *)GPIOE_BASE)
+
+
+/* Related to Interrupts definition */
+
+#define EXTI    ((Exti_Reg_Def_t *)EXTI_BASE)
+#define NVIC    ((NVIC_Reg_Def_t *)NVIC_BASE)
+#define SYSCFG  ((SYSCFG_Reg_Def_t *)SYSCFG_BASE)
+
+
+
+
+
+
+
 
 /* Function prototypes */
 void GPIO_init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig);
@@ -143,7 +205,9 @@ void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);
 uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);
 void GPIO_bssrPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);
 void Delay(uint32_t delay);
-
+void NVIC_enableIRQ(uint8_t IRQNumber);
+void NVIC_disableIRQ(uint8_t IRQNumber);
+void SYSCFG_enableEXTI(uint8_t portCode, uint8_t pinNumber);
 
 
 #endif 

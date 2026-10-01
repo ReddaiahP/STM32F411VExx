@@ -76,3 +76,25 @@ void GPIO_bssrPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value){
         pGpiox->BSRR = (1 << (pinNumber + 16));
     }
 }
+
+
+void NVIC_enableIRQ(uint8_t IRQNumber){
+    uint8_t registerIndex = IRQNumber / 32;
+    uint8_t bitPosition = IRQNumber % 32;
+    NVIC->ISER[registerIndex] = (1 << bitPosition);
+}
+
+void NVIC_disableIRQ(uint8_t IRQNumber){
+    uint8_t registerIndex = IRQNumber / 32;
+    uint8_t bitPosition = IRQNumber % 32;
+    NVIC->ICER[registerIndex] = (1 << bitPosition);
+}
+
+
+void SYSCFG_enableEXTI(uint8_t portCodeExti, uint8_t pinNumber){
+    uint8_t extiIndex = pinNumber / 4;
+    uint8_t extiPosition = pinNumber % 4;
+    SYSCFG->EXTICR[extiIndex] &= ~(0xF << (4*extiPosition));
+    SYSCFG->EXTICR[extiIndex] |= (portCodeExti << (4*extiPosition));
+}
+    

@@ -90,4 +90,9 @@ typedef struct
 #define GPIOE_PREG_RST()   do{(RCC->AHB1RSTR |= (1U << 4)); (RCC->AHB1RSTR &= ~(1U << 4));} while(0)
 
 
+/* SYSCONFG related */
+
+#define SYSCFG_PCLK_EN()    (RCC->APB2ENR |= (1U << 14));
+
+
 #endif
