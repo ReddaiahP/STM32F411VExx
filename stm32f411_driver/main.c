@@ -29,20 +29,22 @@ int main(void)
     GPIO_init(pGpioD13, &pinConfigD13);
     GPIO_init(pGpioD12, &pinConfigD12);
 
-    // GPIO A0 config as input
-    GPIO_Reg_Def_t *pGpioA0 = GPIOA;
-    GPIO_PinConfig_t pinConfigA0;
-    pinConfigA0.pin = GPIO_PIN_NO_0;
-    pinConfigA0.opMode = GPIO_MODE_IN;
-    pinConfigA0.pupd = GPIO_NO_PUPD;
+    // GPIO E6 config as input
+    GPIO_Reg_Def_t *pGpioE6 = GPIOE;
+    GPIO_PinConfig_t pinConfigE6;
+    pinConfigE6.pin = GPIO_PIN_NO_6;
+    pinConfigE6.opMode = GPIO_MODE_IN;
+    pinConfigE6.otype = GPIO_OP_TYPE_PP;
+    pinConfigE6.pupd = GPIO_PU;
+    GPIOE_PCLK_EN();
+    GPIOE_PREG_RST();
+    GPIO_init(pGpioE6, &pinConfigE6);
 
-    GPIO_init(pGpioA0, &pinConfigA0);
-
-
-    SYSCFG_enableEXTI(PORT_CODE_GPIOA, GPIO_PIN_NO_0);
-    EXTI_enableIRQ(GPIO_PIN_NO_0);
-    EXTI_setTrigger(GPIO_PIN_NO_0, EXTI_TRIGGER_RISING);
-    NVIC_enableIRQ(IRQ_NO_EXTI0);
+    SYSCFG_PCLK_EN();
+    SYSCFG_enableEXTI(PORT_CODE_GPIOE, GPIO_PIN_NO_6);
+    EXTI_enableIRQ(GPIO_PIN_NO_6);
+    EXTI_setTrigger(GPIO_PIN_NO_6, EXTI_TRIGGER_FALLING);
+    NVIC_enableIRQ(IRQ_NO_EXTI9_5);
 
     while(1)
     {
@@ -64,7 +66,7 @@ int main(void)
 
 
 
-void EXTI0_IRQHandler(void){
+void EXTI9_5_IRQHandler(void){
     IRQ0_FLAG = 1;
-    EXTI_clearPending(GPIO_PIN_NO_0);
+    EXTI_clearPending(GPIO_PIN_NO_6);
 }
