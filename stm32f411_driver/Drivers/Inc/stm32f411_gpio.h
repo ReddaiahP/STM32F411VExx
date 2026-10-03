@@ -125,6 +125,12 @@ typedef enum{
     PORT_CODE_GPIOE
 }PortCode_Exti_t;
 
+typedef enum{
+    EXTI_TRIGGER_RISING = 0,
+    EXTI_TRIGGER_FALLING,
+    EXTI_TRIGGER_RISING_FALLING
+}EXTI_Trigger_t;
+
 
 
 /* Interrupt registers */
@@ -197,17 +203,25 @@ typedef struct{
 
 
 /* Function prototypes */
-void GPIO_init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig);
-void GPIO_writePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);
-void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
-uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);
-void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);
-uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);
-void GPIO_bssrPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);
-void Delay(uint32_t delay);
-void NVIC_enableIRQ(uint8_t IRQNumber);
-void NVIC_disableIRQ(uint8_t IRQNumber);
-void SYSCFG_enableEXTI(uint8_t portCode, uint8_t pinNumber);
+void GPIO_init(GPIO_Reg_Def_t *pGpiox, GPIO_PinConfig_t *pinConfig);                // Initialize GPIO pin with the specified configuration
+void GPIO_writePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);        // Write a value to a specific GPIO pin
+void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);                         // Write a value to the entire GPIO port
+uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);                                     // Read the value of the entire GPIO port
+void GPIO_togglePin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);                      // Toggle the state of a specific GPIO pin
+uint8_t GPIO_readPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber);                     // Read the value of a specific GPIO pin
+void GPIO_writePort(GPIO_Reg_Def_t *pGpiox,uint16_t value);                         // Write a value to the entire GPIO port
+uint16_t GPIO_readPort(GPIO_Reg_Def_t *pGpiox);                                     // Read the value of the entire GPIO port
+void GPIO_bssrPin(GPIO_Reg_Def_t *pGpiox,uint8_t pinNumber, uint8_t value);         // Set or reset a specific GPIO pin using the BSSR register
 
+void Delay(uint32_t delay);                                                         // Delay function
+void NVIC_enableIRQ(uint8_t IRQNumber);                                             // Enable a specific interrupt in the NVIC
+void NVIC_disableIRQ(uint8_t IRQNumber);                                            // Disable a specific interrupt in the NVIC
+void SYSCFG_enableEXTI(uint8_t portCode, uint8_t pinNumber);                        // Enable EXTI for a specific Port and Pin combination
+void EXTI_enableIRQ(uint8_t pinNumber);                                             // Enable EXTI interrupt for a specific pin to tell weather allow or not the interrupt to be generated
+void EXTI_disableIRQ(uint8_t pinNumber);                                            // Disable EXTI interrupt for a specific pin
+void EXTI_setTrigger(uint8_t pinNumber, uint8_t triggerType);                       // Set the trigger type (rising/falling) for a specific EXTI pin
+void EXTI_clearPending(uint8_t pinNumber);                                          // Clear the pending interrupt for a specific EXTI pin
+void EXTI_generateSWInterrupt(uint8_t pinNumber);                                   // Generate a software interrupt for a specific EXTI Pin
 
+void EXTI0_IRQHandler(void);                                                        // EXTI0 interrupt handler    
 #endif 

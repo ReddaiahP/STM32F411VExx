@@ -97,4 +97,29 @@ void SYSCFG_enableEXTI(uint8_t portCodeExti, uint8_t pinNumber){
     SYSCFG->EXTICR[extiIndex] &= ~(0xF << (4*extiPosition));
     SYSCFG->EXTICR[extiIndex] |= (portCodeExti << (4*extiPosition));
 }
-    
+
+
+void EXTI_enableIRQ(uint8_t pinNumber){
+    EXTI->IMR |= (1 << pinNumber);
+}
+
+void EXTI_disableIRQ(uint8_t pinNumber){
+    EXTI->IMR &= ~(1 << pinNumber);
+}
+
+void EXTI_setTrigger(uint8_t pinNumber, uint8_t triggerType){
+    if(triggerType == EXTI_TRIGGER_RISING){
+        EXTI->RTSR |= (1 << pinNumber);
+        EXTI->FTSR &= ~(1 << pinNumber);
+    }else if(triggerType == EXTI_TRIGGER_FALLING){
+        EXTI->FTSR |= (1 << pinNumber);
+        EXTI->RTSR &= ~(1 << pinNumber);
+    }else if(triggerType == EXTI_TRIGGER_RISING_FALLING){
+        EXTI->RTSR |= (1 << pinNumber);
+        EXTI->FTSR |= (1 << pinNumber);
+    }
+}
+
+void EXTI_clearPending(uint8_t pinNumber){
+    EXTI->PR = (1 << pinNumber);
+}
