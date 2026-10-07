@@ -177,9 +177,6 @@ typedef struct{
 
 
 
-
-
-
 /* GPIO peripheral definitions */
 
 #define GPIOA    ((GPIO_Reg_Def_t *)GPIOA_BASE)
@@ -194,6 +191,7 @@ typedef struct{
 #define EXTI    ((Exti_Reg_Def_t *)EXTI_BASE)
 #define NVIC    ((NVIC_Reg_Def_t *)NVIC_BASE)
 #define SYSCFG  ((SYSCFG_Reg_Def_t *)SYSCFG_BASE)
+
 
 
 
@@ -221,7 +219,7 @@ void EXTI_enableIRQ(uint8_t pinNumber);                                         
 void EXTI_disableIRQ(uint8_t pinNumber);                                            // Disable EXTI interrupt for a specific pin
 void EXTI_setTrigger(uint8_t pinNumber, uint8_t triggerType);                       // Set the trigger type (rising/falling) for a specific EXTI pin
 void EXTI_clearPending(uint8_t pinNumber);                                          // Clear the pending interrupt for a specific EXTI pin
-void EXTI_generateSWInterrupt(uint8_t pinNumber);                                   // Generate a software interrupt for a specific EXTI Pin
+void EXTI_generateSWInterrupt(uint8_t pinNumber); 
 
 void EXTI0_IRQHandler(void);                                                        // EXTI0 interrupt handler    
 #endif 

@@ -28,6 +28,6 @@
 
 
 #define NVIC_BASE   ((volatile uint32_t *)0xE000E100UL)
-
+#define STK_BASE    ((volatile uint32_t *)0xE000E010UL)
 
 #endif

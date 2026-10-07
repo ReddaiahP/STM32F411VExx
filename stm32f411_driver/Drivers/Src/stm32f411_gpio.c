@@ -123,3 +123,4 @@ void EXTI_setTrigger(uint8_t pinNumber, uint8_t triggerType){
 void EXTI_clearPending(uint8_t pinNumber){
     EXTI->PR = (1 << pinNumber);
 }
+
