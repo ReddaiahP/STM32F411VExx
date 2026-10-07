@@ -34,17 +34,21 @@ int main(void)
 
     
 
-    SysTick_Init(100000000); // Initialize SysTick timer
+    SysTick_Init(16777216); // Initialize SysTick timer
 
     GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
     GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
-
+    
     while(1)
     {
-        if(SysTick_FLAG >= 10){
-            SysTick_FLAG = 0;
+        if(SysTick_FLAG >= 5){
             GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_CLEAR);
             GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_CLEAR);
+            SysTick_FLAG = 0;
+            
+        }else if(SysTick_FLAG >= 2){
+            GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
+            GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
         }
         
     }
@@ -56,5 +60,4 @@ int main(void)
 void SysTick_Handler(void){
     // Handle SysTick interrupt
     SysTick_FLAG++;
-
 }
