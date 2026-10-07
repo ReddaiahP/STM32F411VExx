@@ -4,7 +4,7 @@
 
 // extern void EXTI0_IRQHandler(void);
 
-volatile static uint8_t SysTick_FLAG = 0;
+volatile static uint32_t SysTick_FLAG = 0;
 
 int main(void)
 {   
@@ -34,27 +34,31 @@ int main(void)
 
     
 
-    SysTick_Init(16777216); // Initialize SysTick timer
+    SysTicReg_Config_t systickConfig;
+    systickConfig.LOAD_BIT = 100000 - 1; // Set the reload value for 1 second delay (assuming 16 MHz clock)
+    systickConfig.CTRL_BIT = CTRL_EN;
+    systickConfig.TICKINT_BIT = TICKINT_EN;
+    systickConfig.CLKSOURCE_BIT = CLKSOURCE_AHB;
+    systickConfig.VAL_BIT = 0; // Clear the current value
+    SysTick_Init(&systickConfig); // Initialize SysTick timer
 
     GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
     GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
     
     while(1)
     {
-        if(SysTick_FLAG >= 5){
+        if(SysTick_FLAG >= 500){
             GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_CLEAR);
             GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_CLEAR);
             SysTick_FLAG = 0;
             
-        }else if(SysTick_FLAG >= 2){
+        }else if(SysTick_FLAG >= 200){
             GPIO_bssrPin(pGpioD13, GPIO_PIN_NO_13, GPIO_PIN_SET);
             GPIO_bssrPin(pGpioD12, GPIO_PIN_NO_12, GPIO_PIN_SET);
         }
         
     }
 }
-
-
 
 
 void SysTick_Handler(void){
