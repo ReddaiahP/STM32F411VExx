@@ -27,7 +27,6 @@ typedef struct
 } SysTick_Reg_Def_t;
 
 typedef struct {
-    volatile uint32_t CTRL_BIT;
     volatile uint32_t TICKINT_BIT;
     volatile uint32_t CLKSOURCE_BIT;
     volatile uint32_t LOAD_BIT;
@@ -38,3 +37,8 @@ typedef struct {
 #define SYSTICK ((SysTick_Reg_Def_t *)STK_BASE)
 
 void SysTick_Init(SysTicReg_Config_t *psystickregconfig);
+void SysTick_Start(void);
+void SysTick_Stop(void);
+uint32_t SysTick_GetCurrentValue(void);
+uint8_t SysTick_GetFlagStatus(void);
+void SysTick_Delay_ms(uint32_t ms);
