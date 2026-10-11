@@ -1,5 +1,12 @@
 #include "stm32f411_systick.h"
 
+volatile uint32_t SysTick_FLAG;
+volatile uint32_t lastTick;
+volatile uint32_t currentTick;
+
+void SysTick_Handler(void){
+    SysTick_FLAG++;
+}
 
 void SysTick_Init(SysTicReg_Config_t *psystickregconfig)
 {
@@ -42,4 +49,10 @@ void SysTick_Delay_ms(uint32_t ms){
             local_tick_count++;
         }
     }
+}
+
+
+// delay function non blocking
+uint8_t SysTick_Delay_ms_nb(uint32_t previousTick, uint32_t delay_ms){
+    return ((SysTick_FLAG-previousTick)>=delay_ms);
 }

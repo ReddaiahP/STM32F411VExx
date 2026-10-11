@@ -1,5 +1,9 @@
 #include "stm32f411_driver.h"
 
+
+#define _100MHZ (100000-1)
+
+
 typedef enum{
     CTRL_DI = 0,
     CTRL_EN = 1,
@@ -42,3 +46,4 @@ void SysTick_Stop(void);
 uint32_t SysTick_GetCurrentValue(void);
 uint8_t SysTick_GetFlagStatus(void);
 void SysTick_Delay_ms(uint32_t ms);
+uint8_t SysTick_Delay_ms_nb(uint32_t previousTick, uint32_t delay_ms);
