@@ -50,7 +50,7 @@ int main(void)
     GPIO_init(pGpioD15, &pinConfigD15);
 
     SysTicReg_Config_t systickConfig;
-    systickConfig.LOAD_BIT = _100MHZ; // 1 ms baseline timing at 100 MHz clock
+    systickConfig.LOAD_BIT = _16MHZ; // 1 ms baseline timing at 16 MHz clock
     systickConfig.TICKINT_BIT = TICKINT_EN;
     systickConfig.CLKSOURCE_BIT = CLKSOURCE_AHB;
     systickConfig.VAL_BIT = 0; 
@@ -66,7 +66,7 @@ int main(void)
     while(1)
     {   
 
-        if(SysTick_Delay_ms_nb(prevTick1,10)){
+        if(SysTick_Delay_ms_nb(prevTick1,10000)){
             GPIO_togglePin(pGpioD12, GPIO_PIN_NO_12);
             prevTick1 = SysTick_FLAG;
         }

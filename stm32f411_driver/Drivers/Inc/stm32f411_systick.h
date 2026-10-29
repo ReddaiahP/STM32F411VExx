@@ -1,7 +1,7 @@
 #include "stm32f411_driver.h"
 
 
-#define _100MHZ (100000-1)
+#define _16MHZ (16000-1) // for 1 ms delay at 16 MHz clock 16mhz s/1000
 
 
 typedef enum{
